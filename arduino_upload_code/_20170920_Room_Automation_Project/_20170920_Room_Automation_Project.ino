@@ -1,5 +1,5 @@
 // Remote Outlet Switch Automation using Arduino Uno
-// by oran collins
+// by oran c
 // 2017-09-20
 // oranbusiness@gmail.com
 // This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
@@ -43,6 +43,7 @@ let 1 = 1 miliscond ei 1000 milisecond = 1 second
 1000 t - slow
 */
 int MAXSPEED = 90;
+int LEDPIN = 13;
 int NUMPINS = 8,
 ONBTTN1 = 7,
 OFFBTN1 = 6,
@@ -112,6 +113,18 @@ int getPinNum(int buttonNumber, String state)
 	}
 }
 
+void blinkPattern(int btnNum){
+		int pause = 500;
+		for(int i=0; i<=btnNum -1; i++){
+		    digitalWrite(LEDPIN, HIGH);
+			delay(pause);
+
+			digitalWrite(LEDPIN, LOW);
+			delay(pause);
+		}
+		
+
+}
 void btnOn(int btnNum, int DELAY)
 {
 	int onPin = getPinNum(btnNum, "ON");
@@ -122,6 +135,8 @@ void btnOn(int btnNum, int DELAY)
 		delay(DELAY);
 		digitalWrite(onPin, LOW);
 		digitalWrite(offPin, LOW);
+
+		blinkPattern(btnNum);
 	}
 	else
 	{
@@ -139,6 +154,9 @@ void btnOff(int btnNum, int DELAY)
 		delay(DELAY);
 		digitalWrite(onPin, LOW);
 		digitalWrite(offPin, LOW);
+
+		blinkPattern(btnNum);
+
 	}
 	else
 	{
@@ -151,12 +169,12 @@ void button(int btnNum, int state, int DELAY)
 	if (state == 1)
 	{
 		btnOn(btnNum, DELAY);
-		Serial.println("Switch #" + String(btnNum) + ": ON");
+		Serial.println("Switch #" + char(btnNum) + ": ON");
 	}
 	else
 		if (state == 0)
 		{
-			Serial.println("Switch #" + String(btnNum) + ": OFF");
+			Serial.println("Switch #" + char(btnNum) + ": OFF");
 			btnOff(btnNum, DELAY);
 		}
 	else
@@ -178,6 +196,8 @@ void setup()
 	pinMode(OFFBTN4, OUTPUT);
 	pinMode(ONBTTN5, OUTPUT);
 	pinMode(OFFBTN5, OUTPUT);
+	pinMode(LEDPIN, OUTPUT);
+
 	Serial.begin(9600);
 	Serial.println("wating for serial.....");
 	while (!Serial)

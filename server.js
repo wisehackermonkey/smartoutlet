@@ -63,7 +63,7 @@ io.on('connection', function(socket)
 
 					//write button number & on off state
 					//to serial port
-					arduino.write(btn.number + "," + btn.state);
+					arduino.write(`${btn.number},${btn.state}\n`);
 					print(`It works: ${btn.number},${btn.state}`);
 				}else{
 					print("WARNING: buttonPress not getting data");
