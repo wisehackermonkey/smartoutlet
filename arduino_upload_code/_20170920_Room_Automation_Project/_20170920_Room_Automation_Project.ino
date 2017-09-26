@@ -135,8 +135,6 @@ void btnOn(int btnNum, int DELAY)
 		delay(DELAY);
 		digitalWrite(onPin, LOW);
 		digitalWrite(offPin, LOW);
-
-		blinkPattern(btnNum);
 	}
 	else
 	{
@@ -154,8 +152,6 @@ void btnOff(int btnNum, int DELAY)
 		delay(DELAY);
 		digitalWrite(onPin, LOW);
 		digitalWrite(offPin, LOW);
-
-		blinkPattern(btnNum);
 
 	}
 	else
