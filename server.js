@@ -16,6 +16,17 @@ i soldered a transistor to each on and off button
 to allow the arduino controll the buttons.*/
 
 
+
+/*
+Todo list
+speed up arduino
+
+retry unpluged serial port
+https://stackoverflow.com/questions/18551293/node-js-serialport-events-stop-working-after-reconnecting-to-port
+
+port to raspi  from arduino code to run on  so i dont
+	use two devices
+*/
 //by helper library for print() and others!
 require('wise-helper');
 
@@ -46,46 +57,64 @@ if(typeof serialPortName === "undefined")
 }
 
 
-var arduino = new SerialPort(serialPortName,{
-		baudRate: 9600,
-		parser: SerialPort.parsers.readline('\n\r')
-	}
-);
 
 
 
-io.on('connection', function(socket)
-	{
-		print("Client Connected");
-		socket.on("buttonPress", function(btn){
-				if(btn)
-				{
+function connectSerialArduino(){
+	var arduino = new SerialPort(serialPortName,{
+			baudRate: 9600,
+			parser: SerialPort.parsers.readline('\n\r')
+		}
+	);
 
-					//write button number & on off state
-					//to serial port
-					arduino.write(`${btn.number},${btn.state}\n`);
-					print(`It works: ${btn.number},${btn.state}`);
-				}else{
-					print("WARNING: buttonPress not getting data");
+	io.on('connection', function(socket)
+		{
+			print("Client Connected");
+			socket.on("buttonPress", function(btn){
+					if(btn)
+					{
+
+						//write button number & on off state
+						//to serial port
+						arduino.write(`${btn.number},${btn.state}\n`);
+						print(`Data Sent: ${btn.number},${btn.state}`);
+					}else{
+						print("WARNING: buttonPress not getting data");
+					}
 				}
-			}
-		);
-	}
-);
+			);
+		}
+	);
 
 
-arduino.on('data',function (data) {
-	print("Serial Port : Receiving Data - ",data);
-});
-arduino.on('close',function(){
-	print("Serial Port : Closed.");
-});
+	arduino.on('data',function (data) {
+		print("Serial Port : Receiving Data - ",data);
+	});
+	arduino.on('close',function(){
+		print("Serial Port : Closed.");
+	});
 
 
-//TODO retry if serial port is closed or disconected
-arduino.on('error', function(error){
-	console.error('Serial Port : ' + error);
-});
+	//TODO retry if serial port is closed or disconected
+	arduino.on('error', function(error){
+		console.error('Serial Port : ' + error);
+		// arduino.close(reconnectArduino);
+		// print("ARDUINO connected!");	
+	});
+
+
+}
+
+/*var reconnectArduino = function () {
+  console.log('Attempting Reconect to arduino');
+  setTimeout(function(){
+    console.log('RECONNECTING TO ARDUINO');
+    connectSerialArduino();
+  }, 2000);
+};
+*/
+connectSerialArduino();
+
 
 //start express webserver 
 //on process port or normal port if already in use
