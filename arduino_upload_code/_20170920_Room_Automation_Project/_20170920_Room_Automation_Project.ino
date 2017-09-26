@@ -165,12 +165,12 @@ void button(int btnNum, int state, int DELAY)
 	if (state == 1)
 	{
 		btnOn(btnNum, DELAY);
-		Serial.println("Switch #" + char(btnNum) + ": ON");
+		Serial.println("Switch #" + String(btnNum) + ": ON");
 	}
 	else
 		if (state == 0)
 		{
-			Serial.println("Switch #" + char(btnNum) + ": OFF");
+			Serial.println("Switch #" + String(btnNum) + ": OFF");
 			btnOff(btnNum, DELAY);
 		}
 	else
