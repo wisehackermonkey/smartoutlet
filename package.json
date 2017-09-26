@@ -1,0 +1,29 @@
+{
+  "name": "remote_outlet_switch_arduino_uno",
+  "version": "1.0.0",
+  "description": "this program is to turn off and on a remote powerswitch i bought from china for $25 for a pack of 5 switches. this is the interface to turn them off and on with the arduino using nodejs to controll the buttons.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js && echo 'dickbutt here'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tba"
+  },
+  "keywords": [
+    "remote",
+    "powerswitch",
+    "china",
+    "interface",
+    "arduino",
+    "nodejs",
+    "controll",
+    "buttons."
+  ],
+  "author": "wisemonkey",
+  "license": "ISC",
+  "dependencies": {
+    "wise-helper": "^2.4.0"
+  }
+}
