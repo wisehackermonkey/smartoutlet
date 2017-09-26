@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>20170924_remote_outlet_switch_v1</title>
+    <script src="libraries/p5.js" type="text/javascript"></script>
+
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+    <!--Socket.io : Websocket library nodejs and browser-->
+    <script  type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="sketch.js" type="text/javascript"></script>
+
+  <script>
+    var socket = io.connect(window.location.origin);
+    socket.on('serverUp', function (data) {
+      console.log(data);
+    });
+    socket.emit('clientUp', "Client is connected!");
+  </script>
+
+    <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
+  </head>
+  <body>
+  </body>
+</html>
